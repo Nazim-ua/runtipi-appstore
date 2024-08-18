@@ -1,0 +1,59 @@
+{
+  "$schema": "../schema.json",
+  "name": "OctoEverywhere's Bambu Connect Cloud Mode",
+  // "port": 5984,
+  "available": true,
+  "exposable": false,
+  "no_gui": true,
+  "id": "oewbcc",
+  "tipi_version": 1,
+  "version": "3.5.6",
+  "categories": ["utilities", "automation"],
+  "description": "Cloud Empower Your Bambu Lab 3D Printers With Free, Private, And Secure Remote Access, AI Print Failure Detection, Real-time Notifications, Live Streaming, and More! ",
+  "short_desc": "OctoEverywhere's Bambu Connect Cloud Mode enables the full power of OctoEverywhere for Bambu Lab 3D printers",
+  "author": "QuinnDamerell",
+  "source": "https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bambulab printer serial number",
+      "hint": "Find using the printer's display or use https://octoeverywhere.com/s/bambu-sn",
+      "min": 15,
+      "max": 15,
+      "required": true,
+      "env_variable": "BAMBU_SERIAL_NUMBER"
+    },
+    {
+      "type": "ip",
+      "label": "Bambulab printer IP",
+      "hint": "Find using the printer's display or use https://octoeverywhere.com/s/bambu-ip",
+      "required": true,
+      "env_variable": "BAMBU_PRINTER_IP"
+    },
+    {
+      "type": "email",
+      "label": "Bambulab account email",
+      "required": true,
+      "env_variable": "BAMBU_CLOUD_ACCOUNT_EMAIL"
+    },
+    {
+      "type": "password",
+      "label": "Bambulab account password",
+      "max": 50,
+      "min": 8,
+      "required": true,
+      "env_variable": "BAMBU_CLOUD_ACCOUNT_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Bambulab account region",
+      "hint": "Optional, use if your Bambu account is in the China region type 'china'",
+      "required": false,
+      "default": "",
+      "env_variable": "BAMBU_CLOUD_REGION"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1723996550000,
+  "updated_at": 1723996550000
+}

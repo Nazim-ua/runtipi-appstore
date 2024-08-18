@@ -1,0 +1,56 @@
+version: '3.9'
+services:
+  oewbcc:
+    container_name: oewbcc
+    image: octoeverywhere/octoeverywhere:latest
+    environment:
+      - TZ=${TZ}
+      - SERIAL_NUMBER=${BAMBU_SERIAL_NUMBER}
+      - PRINTER_IP=${BAMBU_PRINTER_IP}
+
+      # ~~~ If connecting with Bambu Cloud Mode ~~~
+      - BAMBU_CLOUD_ACCOUNT_EMAIL=${BAMBU_CLOUD_ACCOUNT_EMAIL}
+      - BAMBU_CLOUD_ACCOUNT_PASSWORD=${BAMBU_CLOUD_ACCOUNT_PASSWORD}
+      - BAMBU_CLOUD_REGION=${BAMBU_CLOUD_REGION}
+
+      # ~~~ OR If connecting with LAN Only Mode ~~~
+      # https://octoeverywhere.com/s/access-code
+      # - ACCESS_CODE=XXXXXXXX
+      # - LAN_ONLY_MODE=TRUE
+
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/plugin/data:/var/octoeverywhere/plugin/data
+    # ports:
+    #   - ${APP_PORT}:5001
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    dns:
+      - ${DNS_IP}
+    labels:
+      # Main
+      traefik.enable: true
+      traefik.http.middlewares.oewbcc-web-redirect.redirectscheme.scheme: https
+      # traefik.http.services.oewbcc.loadbalancer.server.port: 5001
+      # Web
+      traefik.http.routers.oewbcc-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.oewbcc-insecure.entrypoints: web
+      traefik.http.routers.oewbcc-insecure.service: oewbcc
+      traefik.http.routers.oewbcc-insecure.middlewares: oewbcc-web-redirect
+      # Websecure
+      traefik.http.routers.oewbcc.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.oewbcc.entrypoints: websecure
+      traefik.http.routers.oewbcc.service: oewbcc
+      traefik.http.routers.oewbcc.tls.certresolver: myresolver
+      # Local domain
+      traefik.http.routers.oewbcc-local-insecure.rule: Host(`oewbcc.${LOCAL_DOMAIN}`)
+      traefik.http.routers.oewbcc-local-insecure.entrypoints: web
+      traefik.http.routers.oewbcc-local-insecure.service: oewbcc
+      traefik.http.routers.oewbcc-local-insecure.middlewares: oewbcc-web-redirect
+      # Local domain secure
+      traefik.http.routers.oewbcc-local.rule: Host(`oewbcc.${LOCAL_DOMAIN}`)
+      traefik.http.routers.oewbcc-local.entrypoints: websecure
+      traefik.http.routers.oewbcc-local.service: oewbcc
+      traefik.http.routers.ooewbcctobot-local.tls: true
+      runtipi.managed: true
