@@ -2,7 +2,7 @@ version: '3.9'
 services:
   oewbcc:
     container_name: oewbcc
-    image: octoeverywhere/octoeverywhere:latest
+    image: octoeverywhere/octoeverywhere:3.5.6
     environment:
       - TZ=${TZ}
       - SERIAL_NUMBER=${BAMBU_SERIAL_NUMBER}
