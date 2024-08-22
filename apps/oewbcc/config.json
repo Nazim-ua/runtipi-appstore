@@ -1,7 +1,7 @@
 {
   "$schema": "../schema.json",
   "name": "OctoEverywhere's Bambu Connect Cloud Mode",
-  // "port": 5984,
+  "port": 8707,
   "available": true,
   "exposable": false,
   "no_gui": true,
